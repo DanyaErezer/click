@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('clicks', function (Blueprint $table) {
             $table->id();
+            $table->string('url');
+            $table->dateTime('date');
+            $table->integer('x');
+            $table->integer('y');
             $table->timestamps();
         });
     }
