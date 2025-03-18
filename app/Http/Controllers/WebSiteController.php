@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Click;
+use App\Models\WebSite;
 use Illuminate\Http\Request;
 
 class WebSiteController extends Controller
@@ -12,7 +13,8 @@ class WebSiteController extends Controller
      */
     public function index()
     {
-        //
+        $webSites = WebSite::all();
+        return view('webSites.index', compact('webSites'));
     }
 
     /**
@@ -20,7 +22,7 @@ class WebSiteController extends Controller
      */
     public function create()
     {
-        //
+        return view('webSites.create');
     }
 
     /**
@@ -28,16 +30,26 @@ class WebSiteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'url' => 'required|url|unique:WebSites,url',
+        ]);
+
+        WebSite::create($validated); //
+
+        return redirect()->route('webSites.index')->with('success', 'Сайт успешно добавлен!');
     }
 
     /**
      * Display the specified resource.
      */
+    public function show(){
+
+    }
     public function heatmap()
     {
         $click = Click::all();
-        return view('heatmap', compact('click'));
+        return view('/clicks/heatmap', compact('click'));
     }
 
     public function chart()
@@ -46,7 +58,7 @@ class WebSiteController extends Controller
             ->groupBy('hour')
             ->orderBy('hour')
             ->get();
-        return view('chart', compact('clickByHour'));
+        return view('/clicks/chart', compact('clickByHour'));
     }
 
     /**
@@ -54,7 +66,8 @@ class WebSiteController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $webSite = WebSite::findOrFail($id);
+        return view('webSites.edit', compact('webSite'));
     }
 
     /**
@@ -62,7 +75,13 @@ class WebSiteController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'url' => 'required|url|unique:sites,url,' . $id,
+            ]);
+        $webSite = WebSite::findOrFail($id);
+        $webSite->update($validated);
+        return redirect()->route('webSites.index') ->with('success', 'Сайт успешно обновлен!');
     }
 
     /**
@@ -70,6 +89,9 @@ class WebSiteController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $webSite = WebSite::findOrFail($id);
+        $webSite->delete();
+
+        return redirect()->route('webSites.index')->with('success', 'Сайт успешно удален!');
     }
 }

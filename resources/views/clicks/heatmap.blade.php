@@ -8,7 +8,7 @@
     <title>Document</title>
 </head>
 <body>
-<div id="heatmap" style="width: 100%; height: 500px;"></div>
+<div id="heatmap" style="width: 100%; height: 800px;"></div>
 <script src="https://cdn.jsdelivr.net/npm/heatmap.js"></script>
 <script>
     const heatmap = h337.create({

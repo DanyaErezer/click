@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class WebSite extends Model
 {
-    //
+    protected $table = 'web_sites';
 }

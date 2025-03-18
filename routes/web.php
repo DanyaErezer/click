@@ -10,3 +10,4 @@ Route::get('/', function () {
 
 Route::get('/heatmap', [WebSiteController::class, 'heatmap']);
 Route::get('/chart', [WebSiteController::class, 'chart']);
+Route::resource('webSites', WebSiteController::class);
