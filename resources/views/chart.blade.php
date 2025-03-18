@@ -12,7 +12,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     const ctx = document.getElementById('activityChart').getContext('2d');
-    const data = @json($clicksByHour);
+    const data = @json($clickByHour);
     const labels = data.map(item => item.hour + ':00');
     const counts = data.map(item => item.count);
     new Chart(ctx, {

@@ -42,7 +42,7 @@ class WebSiteController extends Controller
 
     public function chart()
     {
-        $clickByHour = Click::selectRaw('HOUR(date) as hour, COUNT(*) as count')
+        $clickByHour = Click::selectRaw('strftime("%H", date) as hour, COUNT(*) as count')
             ->groupBy('hour')
             ->orderBy('hour')
             ->get();

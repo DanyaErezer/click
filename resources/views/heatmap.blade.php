@@ -14,7 +14,7 @@
     const heatmap = h337.create({
         container: document.getElementById('heatmap'),
     });
-    const data = @json($clicks);
+    const data = @json($click);
     const points = data.map(click => ({
         x: click.x,
         y: click.y,
