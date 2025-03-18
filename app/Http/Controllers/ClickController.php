@@ -13,7 +13,7 @@ class ClickController extends Controller
         $clicks = Click::all();
         return response()->json(['message' => 'Api is working']);
     }
-    public function save(Request $request)
+    public function show(Request $request)
     {
         $validatedData = $request->validate([
             'url' => 'required|url',
