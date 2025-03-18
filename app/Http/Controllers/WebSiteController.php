@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Click;
 use Illuminate\Http\Request;
 
 class WebSiteController extends Controller
@@ -33,9 +34,19 @@ class WebSiteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function heatmap()
     {
-        //
+        $click = Click::all();
+        return view('heatmap', compact('click'));
+    }
+
+    public function chart()
+    {
+        $clickByHour = Click::selectRaw('HOUR(date) as hour, COUNT(*) as count')
+            ->groupBy('hour')
+            ->orderBy('hour')
+            ->get();
+        return view('chart', compact('clickByHour'));
     }
 
     /**
