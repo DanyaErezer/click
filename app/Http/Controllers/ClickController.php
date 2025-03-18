@@ -10,6 +10,7 @@ class ClickController extends Controller
 
     public function index()
     {
+        $clicks = Click::all();
         return response()->json(['message' => 'Api is working']);
     }
     public function save(Request $request)
