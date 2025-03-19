@@ -78,4 +78,6 @@ class WebSiteController extends Controller
 
         return redirect()->route('webSites.index')->with('success', 'Сайт успешно удален!');
     }
+
+
 }

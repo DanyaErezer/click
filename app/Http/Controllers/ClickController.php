@@ -19,7 +19,7 @@ class ClickController extends Controller
     {
         // Валидация данных
         $validatedData = $request->validate([
-            'webSite_id' => 'nullable|exists:web_sites,id',
+            'web_sites_id' => 'nullable|exists:web_sites,id',
             'url' => 'required|url',
             'x' => 'required|integer',
             'y' => 'required|integer',
@@ -31,7 +31,7 @@ class ClickController extends Controller
 
 
         $click = Click::create([
-            'webSite_id' => $validatedData['site_id'] ?? null,
+            'web_sites_id' => $validatedData['web_sites_id'] ?? null,
             'url' => $validatedData['url'],
             'date' => now(),
             'x' => $validatedData['x'],

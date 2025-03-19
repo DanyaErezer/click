@@ -6,4 +6,4 @@ use App\Http\Controllers\ClickController;
 
 
 Route::get('/clicks',[ClickController::class,'index']);
-Route::post('/clicks', [ClickController::class, 'show']);
+Route::post('/clicks', [ClickController::class, 'store']);
