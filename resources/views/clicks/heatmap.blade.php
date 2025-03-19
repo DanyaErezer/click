@@ -19,16 +19,35 @@
     const heatmap = h337.create({
         container: document.getElementById('heatmap'),
     });
+
+    // Предположим, что data приходит с серверной части
     const data = @json($click);
-    const points = data.map(click => ({
-        x: click.x,
-        y: click.y,
-        value: 1,
-    }));
-    heatmap.setData({
-        max: 10,
-        data: points,
+
+    // Получаем размеры окна и документа
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    const documentWidth = document.documentElement.scrollWidth;
+    const documentHeight = document.documentElement.scrollHeight;
+
+    // Нормализуем данные относительно документа
+    const points = data.map(click => {
+        // Нормализуем координаты на основе размеров документа
+        const normalizedX = click.x / documentWidth * 100; // нормализуем x координату
+        const normalizedY = click.y / documentHeight * 100; // нормализуем y координату
+
+        return {
+            x: normalizedX * documentWidth,  // Преобразуем обратно в реальные координаты
+            y: normalizedY * documentHeight, // Преобразуем обратно в реальные координаты
+            value: 1,  // Можно регулировать интенсивность клика
+        };
     });
+
+    // Устанавливаем данные для heatmap
+    heatmap.setData({
+        max: 10, // Максимальное значение для отображения
+        data: points, // Точки данных
+    });
+
 </script>
 
 </body>

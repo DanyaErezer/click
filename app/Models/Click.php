@@ -11,5 +11,12 @@ class Click extends Model
         'date',
         'x',
         'y',
+        'web_sites_id',
+        'created_at',
+        'updated_at',
+        'window_width',
+        'window_height',
+        'document_width',
+        'document_height',
     ];
 }

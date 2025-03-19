@@ -37,20 +37,6 @@ class WebSiteController extends Controller
         return view('webSites.show', compact('webSite'));
     }
 
-    public function heatmap()
-    {
-        $click = Click::all();
-        return view('clicks.heatmap', compact('click'));
-    }
-
-    public function chart()
-    {
-        $clickByHour = Click::selectRaw('strftime("%H", date) as hour, COUNT(*) as count')
-            ->groupBy('hour')
-            ->orderBy('hour')
-            ->get();
-        return view('clicks.chart', compact('clickByHour'));
-    }
 
     public function edit(string $id)
     {
@@ -73,7 +59,7 @@ class WebSiteController extends Controller
 
     public function destroy(string $id)
     {
-        $webSite = WebSite::findOrFail($id); // Исправлено на findOrFail
+        $webSite = WebSite::findOrFail($id);
         $webSite->delete();
 
         return redirect()->route('webSites.index')->with('success', 'Сайт успешно удален!');

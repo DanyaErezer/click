@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClickController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
 use App\Http\Controllers\WebSiteController;
@@ -12,6 +13,6 @@ Route::get('/test', function () {
     return view('/layouts/test');
 });
 
-Route::get('/heatmap', [WebSiteController::class, 'heatmap']);
-Route::get('/chart', [WebSiteController::class, 'chart']);
+Route::get('/heatmap', [ClickController::class, 'heatmap']);
+Route::get('/chart', [ClickController::class, 'chart']);
 Route::resource('webSites', WebSiteController::class);

@@ -14,7 +14,7 @@
         <ul class="nav nav-pills">
             <li class="nav-item"><a href="/" class="nav-link" aria-current="page">Главная</a></li>
             <li class="nav-item"><a href="/webSites" class="nav-link">Список сайтов</a></li>
-            <li class="nav-item"><a href="/webSites/create" class="nav-link">Создание сайт</a></li>
+            <li class="nav-item"><a href="/webSites/create" class="nav-link">Добавить сайт</a></li>
             <li class="nav-item"><a href="/heatmap" class="nav-link">Heatmap</a></li>
             <li class="nav-item"><a href="/test" class="nav-link">Тест кликов</a></li>
             <li class="nav-item"><a href="/chart" class="nav-link">Статистика</a></li>

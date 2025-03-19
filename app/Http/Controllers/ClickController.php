@@ -19,30 +19,45 @@ class ClickController extends Controller
     {
         // Валидация данных
         $validatedData = $request->validate([
-            'web_sites_id' => 'nullable|exists:web_sites,id',
+            'web_sites_id' => 'required|exists:web_sites,id',
             'url' => 'required|url',
             'x' => 'required|integer',
             'y' => 'required|integer',
-            'window_width' => 'nullable|integer',
-            'window_height' => 'nullable|integer',
-            'document_width' => 'nullable|integer',
-            'document_height' => 'nullable|integer',
+            'window_width' => 'required|integer',
+            'window_height' => 'required|integer',
+            'document_width' => 'required|integer',
+            'document_height' => 'required|integer',
         ]);
 
 
         $click = Click::create([
-            'web_sites_id' => $validatedData['web_sites_id'] ?? null,
+            'web_sites_id' => $validatedData['web_sites_id'],
             'url' => $validatedData['url'],
             'date' => now(),
             'x' => $validatedData['x'],
             'y' => $validatedData['y'],
-            'window_width' => $validatedData['window_width'] ?? null,
-            'window_height' => $validatedData['window_height'] ?? null,
-            'document_width' => $validatedData['document_width'] ?? null,
-            'document_height' => $validatedData['document_height'] ?? null,
+            'window_width' => $validatedData['window_width'],
+            'window_height' => $validatedData['window_height'],
+            'document_width' => $validatedData['document_width'],
+            'document_height' => $validatedData['document_height'],
         ]);
 
 
         return response()->json(['message' => 'Click saved', 'data' => $click], 201);
+    }
+
+    public function heatmap()
+    {
+        $click = Click::all();
+        return view('clicks.heatmap', compact('click'));
+    }
+
+    public function chart()
+    {
+        $clickByHour = Click::selectRaw('strftime("%H", date) as hour, COUNT(*) as count')
+            ->groupBy('hour')
+            ->orderBy('hour')
+            ->get();
+        return view('clicks.chart', compact('clickByHour'));
     }
 }
