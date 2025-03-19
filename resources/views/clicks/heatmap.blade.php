@@ -1,3 +1,8 @@
+@extends('layouts.app')
+
+@section('title', 'Клики')
+
+@section('main_content')
 <!doctype html>
 <html lang="ru">
 <head>
@@ -28,3 +33,4 @@
 
 </body>
 </html>
+@endsection

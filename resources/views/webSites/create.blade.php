@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
+@section('title', 'Добавить сайт')
+
 @section('main_content')
     <h1>Добавить сайт</h1>
-    <form action="{{ route('WebSites.store') }}" method="POST">
+    <form action="{{ route('webSites.store') }}" method="POST">
         @csrf
         <div class="form-group">
             <label for="name">Название</label>

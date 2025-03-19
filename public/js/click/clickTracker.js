@@ -1,15 +1,16 @@
-//С JS практически не работал, поэтому просто вставляю код из deepseek.
 document.addEventListener('click', function(event) {
-    // Собираем данные о клике
     const clickData = {
-        date: new Date().toISOString(), // Дата и время клика
-        x: event.clientX,              // Координата X клика
-        y: event.clientY,              // Координата Y клика
-        url: window.location.href,     // URL страницы, где произошел клик
+        webSite_id: webSiteID,
+        url: window.location.href,
+        x: event.clientX,
+        y: event.clientY,
+        window_width: window.innerWidth,
+        window_height: window.innerHeight,
+        document_width: document.documentElement.scrollWidth,
+        document_height: document.documentElement.scrollHeight,
     };
 
-    // Отправляем данные на сервер
-    fetch('https://localhost:8000/api/clicks', {
+    fetch('http://localhost:8000/api/clicks', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

@@ -1,3 +1,8 @@
+@extends('layouts.app')
+
+@section('title', 'Статистика')
+
+@section('main_content')
 <!doctype html>
 <html lang="ru">
 <head>
@@ -39,3 +44,4 @@
 
 </body>
 </html>
+@endsection

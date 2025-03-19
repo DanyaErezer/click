@@ -12,11 +12,12 @@
 <div class="container">
     <header class="d-flex justify-content-center py-3">
         <ul class="nav nav-pills">
-            <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Features</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+            <li class="nav-item"><a href="/" class="nav-link" aria-current="page">Главная</a></li>
+            <li class="nav-item"><a href="/webSites" class="nav-link">Список сайтов</a></li>
+            <li class="nav-item"><a href="/webSites/create" class="nav-link">Создание сайт</a></li>
+            <li class="nav-item"><a href="/heatmap" class="nav-link">Heatmap</a></li>
+            <li class="nav-item"><a href="/test" class="nav-link">Тест кликов</a></li>
+            <li class="nav-item"><a href="/chart" class="nav-link">Статистика</a></li>
         </ul>
     </header>
 </div>

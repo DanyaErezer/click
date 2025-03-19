@@ -5,7 +5,11 @@ use App\Http\Controllers;
 use App\Http\Controllers\WebSiteController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('/layouts/home');
+});
+
+Route::get('/test', function () {
+    return view('/layouts/test');
 });
 
 Route::get('/heatmap', [WebSiteController::class, 'heatmap']);
