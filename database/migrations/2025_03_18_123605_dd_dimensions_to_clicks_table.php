@@ -28,9 +28,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('clicks', function (Blueprint $table) {
-            $table->dropColumn(['window_width', 'window_height', 'document_width', 'document_height']);
-            $table->dropForeign(['web_sites_id']);
-            $table->dropColumn('web_sites_id');
 
         });
     }

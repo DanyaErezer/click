@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class WebSite extends Model
 {
@@ -12,4 +13,8 @@ class WebSite extends Model
         'name',
         'url',
     ];
+    public function clicks()
+    {
+        return $this->hasMany(Click::class);
+    }
 }

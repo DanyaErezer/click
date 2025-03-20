@@ -9,10 +9,9 @@ Route::get('/', function () {
     return view('/layouts/home');
 });
 
-Route::get('/test', function () {
-    return view('/layouts/test');
-});
+Route::get('/test/{id}', [ClickController::class, 'test'])->name('test');
 
-Route::get('/heatmap', [ClickController::class, 'heatmap']);
-Route::get('/chart', [ClickController::class, 'chart']);
+Route::get('/heatmap/{webSiteId}', [ClickController::class, 'heatmap'])->name('heatmap');
+Route::get('/chart/{webSiteId}', [ClickController::class, 'chart'])->name('chart');
+
 Route::resource('webSites', WebSiteController::class);

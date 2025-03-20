@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Click;
+use App\Models\WebSite;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
 
 class ClickController extends Controller
 {
@@ -19,17 +22,19 @@ class ClickController extends Controller
     {
 
         $validatedData = $request->validate([
+            'web_sites_id' => 'required|exists:web_sites,id',
             'url' => 'required|url',
             'x' => 'required|integer',
             'y' => 'required|integer',
-            'window_width' => 'nullable|integer',
-            'window_height' => 'nullable|integer',
-            'document_width' => 'nullable|integer',
-            'document_height' => 'nullable|integer',
+            'window_width' => 'required|integer',
+            'window_height' => 'required|integer',
+            'document_width' => 'required|integer',
+            'document_height' => 'required|integer',
         ]);
 
 
         $click = Click::create([
+            'web_sites_id' => $validatedData['web_sites_id'],
             'url' => $validatedData['url'],
             'date' => now(),
             'x' => $validatedData['x'],
@@ -44,18 +49,32 @@ class ClickController extends Controller
         return response()->json(['message' => 'Click saved', 'data' => $click], 201);
     }
 
-    public function heatmap()
+    public function heatmap($webSiteId)
     {
-        $click = Click::all();
-        return view('clicks.heatmap', compact('click'));
+
+        $webSite = WebSite::findOrFail($webSiteId);
+
+        // Получаем клики только для этого сайта
+        $clicks = Click::where('web_sites_id', $webSiteId)->get();
+
+
+        return view('clicks.heatmap', compact('clicks', 'webSite'));
     }
 
-    public function chart()
+
+    public function chart($webSiteId)
     {
         $clickByHour = Click::selectRaw('strftime("%H", date) as hour, COUNT(*) as count')
+            ->where('web_sites_id', $webSiteId)
             ->groupBy('hour')
             ->orderBy('hour')
             ->get();
-        return view('clicks.chart', compact('clickByHour'));
+        $clicks = Click::where('web_sites_id', $webSiteId)->get();
+
+        return view('clicks.chart', compact('clickByHour', 'clicks', 'webSiteId'));
+    }
+    public function test($id){
+        $test = WebSite::findOrFail($id);
+        return view('layouts.test', compact('test'));
     }
 }

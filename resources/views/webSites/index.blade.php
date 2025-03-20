@@ -26,10 +26,16 @@
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Удалить</button>
+                        <a href=""></a>
+                        <a href="{{ route('heatmap', $webSite->id) }}" class="btn btn-info">Показать клики</a>
+                        <a href="{{ route('chart', $webSite->id) }}" class="btn btn-success">Показать статистику</a>
+
                     </form>
                 </td>
             </tr>
         @endforeach
+        <script src="{{ asset('js/click/clickTracker.js') }}"></script>
+        <script>startTracking(3)</script>
         </tbody>
     </table>
 @endsection
