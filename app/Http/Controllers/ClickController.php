@@ -2,81 +2,64 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreClickRequest;
 use App\Models\Click;
 use App\Models\WebSite;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\JsonResponse;
 
 class ClickController extends Controller
 {
-
-    public function index()
+    public function index(): JsonResponse
     {
-        $clicks = Click::all();
-        return response()->json(['message' => 'Api is working', 'data' => $clicks]);
+        return response()->json(['message' => 'Api is working']);
     }
 
-
-    public function store(Request $request)
+    public function store(StoreClickRequest $request): JsonResponse
     {
-        $validatedData = $request->validate([
-            'web_sites_id' => 'required|exists:web_sites,id',
-            'url' => 'required|url',
-            'x' => 'required|integer',
-            'y' => 'required|integer',
-            'window_width' => 'required|integer',
-            'window_height' => 'required|integer',
-            'document_width' => 'required|integer',
-            'document_height' => 'required|integer',
-        ]);
+        foreach ($request->all() as $click) {
+            Click::create([
+                'web_sites_id' => $click['web_sites_id'],
+                'url' => $click['url'],
+                'date' => now(),
+                'x' => $click['x'],
+                'y' => $click['y'],
+                'window_width' => $click['window_width'],
+                'window_height' => $click['window_height'],
+                'document_width' => $click['document_width'],
+                'document_height' => $click['document_height'],
+            ]);
+        }
 
-
-        $click = Click::create([
-            'web_sites_id' => $validatedData['web_sites_id'],
-            'url' => $validatedData['url'],
-            'date' => now(),
-            'x' => $validatedData['x'],
-            'y' => $validatedData['y'],
-            'window_width' => $validatedData['window_width'],
-            'window_height' => $validatedData['window_height'],
-            'document_width' => $validatedData['document_width'],
-            'document_height' => $validatedData['document_height'],
-        ]);
-
-
-        return response()->json(['message' => 'Click saved', 'data' => $click], 201);
+        return response()->json(['message' => 'Clicks saved'], 201);
     }
 
-    public function heatmap($webSiteId)
+    public function heatmap(WebSite $website): Factory|Application|View
     {
-
-        $webSite = WebSite::findOrFail($webSiteId);
-
-        $clicks = Click::where('web_sites_id', $webSiteId)->get();
-
-
-        return view('clicks.heatmap', compact('clicks', 'webSite'));
+        return view('clicks.heatmap', compact('website'));
     }
 
-
-    public function chart($webSiteId)
+    public function chart(WebSite $website): Factory|Application|View
     {
         $clickByHour = Click::selectRaw('strftime("%H", date) as hour, COUNT(*) as count')
-            ->where('web_sites_id', $webSiteId)
+            ->where('web_sites_id', $website->id)
             ->groupBy('hour')
             ->orderBy('hour')
             ->get();
-        $clicks = Click::where('web_sites_id', $webSiteId)->get();
 
-        return view('clicks.chart', compact('clickByHour', 'clicks', 'webSiteId'));
+        return view('clicks.chart', compact('clickByHour', 'website'));
     }
-    public function click($webSiteId){
 
-        $webSite = WebSite::findOrFail($webSiteId);
-
-        $clicks = Click::where('web_sites_id', $webSiteId)->get();
-
-        return view('layouts.click', compact('webSite', 'clicks'));
+    /**
+     * Тест кликов
+     *
+     * @param WebSite $website
+     * @return Factory|Application|View
+     */
+    public function click(WebSite $website): Factory|Application|View
+    {
+        return view('layouts.click', compact('website'));
     }
 }

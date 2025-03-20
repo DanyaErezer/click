@@ -2,68 +2,55 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Click;
+use App\Http\Requests\StoreWebsiteRequest;
+use App\Http\Requests\UpdateWebsiteRequest;
 use App\Models\WebSite;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 
 class WebSiteController extends Controller
 {
-    public function index()
+    public function index(): Factory|Application|View
     {
         $webSites = WebSite::all();
         return view('webSites.index', compact('webSites'));
     }
 
-    public function create()
+    public function create(): Factory|Application|View
     {
         return view('webSites.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreWebsiteRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'url' => 'required|url|unique:web_sites,url',
-        ]);
-
-        WebSite::create($validated);
+        WebSite::create($request->all());
 
         return redirect()->route('webSites.index')->with('success', 'Сайт успешно добавлен!');
     }
 
-    public function show($id)
+    public function show(WebSite $webSite): Factory|Application|View
     {
-        $webSite = WebSite::findOrFail();
         return view('webSites.show', compact('webSite'));
     }
 
-
-    public function edit(string $id)
+    public function edit(WebSite $webSite): Factory|Application|View
     {
-        $webSite = WebSite::findOrFail($id);
         return view('webSites.edit', compact('webSite'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(UpdateWebsiteRequest $request, WebSite $webSite): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'url' => 'required|url|unique:web_sites,url,' . $id, // Исправлено на web_sites
-        ]);
-
-        $webSite = WebSite::findOrFail($id);
-        $webSite->update($validated);
+        $webSite->update($request->all());
 
         return redirect()->route('webSites.index')->with('success', 'Сайт успешно обновлен!');
     }
 
-    public function destroy(string $id)
+    public function destroy(WebSite $webSite): RedirectResponse
     {
-        $webSite = WebSite::findOrFail($id);
         $webSite->delete();
 
         return redirect()->route('webSites.index')->with('success', 'Сайт успешно удален!');
     }
-
-
 }

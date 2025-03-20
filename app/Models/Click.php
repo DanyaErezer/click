@@ -21,9 +21,9 @@ class Click extends Model
         'document_height',
         'web_sites_id',
     ];
-    public function webSite()
+
+    public function webSite(): BelongsTo
     {
         return $this->belongsTo(WebSite::class, 'web_sites_id');
     }
-
 }

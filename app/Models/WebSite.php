@@ -13,8 +13,9 @@ class WebSite extends Model
         'name',
         'url',
     ];
-    public function clicks()
+
+    public function clicks(): HasMany
     {
-        return $this->hasMany(Click::class);
+        return $this->hasMany(Click::class, 'web_sites_id', 'id');
     }
 }

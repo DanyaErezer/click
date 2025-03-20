@@ -12,7 +12,7 @@
         radius: 20,
     });
 
-    const data = @json($clicks);
+    const data = @json($website->clicks);
     console.log("Полученные клики:", data);
 
 

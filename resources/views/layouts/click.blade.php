@@ -6,7 +6,7 @@
 
 
     <script src="{{ asset('js/click/clickTracker.js') }}"></script>
-    <script>startTracking({{ $webSite->id }})</script>
+    <script>startTracking({{ $website->id }})</script>
 
 
 @endsection

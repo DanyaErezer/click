@@ -15,6 +15,9 @@
             <label for="url">URL</label>
             <input type="url" name="url" id="url" class="form-control" value="{{ $webSite->url }}" required>
         </div>
+        @if($errors->any())
+            <div style="color:red;">{{$errors}}</div>
+        @endif
         <button type="submit" class="btn btn-primary">Обновить</button>
     </form>
 @endsection
