@@ -21,14 +21,15 @@
                 <td>{{ $webSite->name }}</td>
                 <td>{{ $webSite->url }}</td>
                 <td>
-                    <a href="{{ route('webSites.edit', $webSite->id) }}" class="btn btn-primary">Редактировать</a>
+                    <a href="{{ route('click', $webSite->id)}}" class="btn btn-warning">Клик</a>
+                    <a href="{{ route('heatmap', $webSite->id) }}" class="btn btn-primary">Показать клики</a>
+                    <a href="{{ route('chart', $webSite->id) }}" class="btn btn-success">Показать статистику</a>
+                    <a href="{{ route('webSites.edit', $webSite->id) }}" class="btn btn-info">Редактировать</a>
                     <form action="{{ route('webSites.destroy', $webSite->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Удалить</button>
-                        <a href=""></a>
-                        <a href="{{ route('heatmap', $webSite->id) }}" class="btn btn-info">Показать клики</a>
-                        <a href="{{ route('chart', $webSite->id) }}" class="btn btn-success">Показать статистику</a>
+
 
                     </form>
                 </td>

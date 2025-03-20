@@ -9,19 +9,17 @@
 <script>
     const heatmap = h337.create({
         container: document.getElementById('heatmap'),
-        radius: 15, // Размер пятен кликов
+        radius: 20,
     });
 
     const data = @json($clicks);
     console.log("Полученные клики:", data);
 
 
-    // Получаем размеры окна пользователя и документа
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
 
     const points = data.map(click => {
-        // Масштабируем координаты под текущее разрешение экрана
         const scaleX = windowWidth / click.window_width;
         const scaleY = windowHeight / click.window_height;
 
@@ -33,7 +31,7 @@
     });
 
     heatmap.setData({
-        max: 50,
+        max: 30,
         data: points,
     });
 </script>

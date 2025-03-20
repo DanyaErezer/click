@@ -20,7 +20,6 @@ class ClickController extends Controller
 
     public function store(Request $request)
     {
-
         $validatedData = $request->validate([
             'web_sites_id' => 'required|exists:web_sites,id',
             'url' => 'required|url',
@@ -54,7 +53,6 @@ class ClickController extends Controller
 
         $webSite = WebSite::findOrFail($webSiteId);
 
-        // Получаем клики только для этого сайта
         $clicks = Click::where('web_sites_id', $webSiteId)->get();
 
 
@@ -73,8 +71,12 @@ class ClickController extends Controller
 
         return view('clicks.chart', compact('clickByHour', 'clicks', 'webSiteId'));
     }
-    public function test($id){
-        $test = WebSite::findOrFail($id);
-        return view('layouts.test', compact('test'));
+    public function click($webSiteId){
+
+        $webSite = WebSite::findOrFail($webSiteId);
+
+        $clicks = Click::where('web_sites_id', $webSiteId)->get();
+
+        return view('layouts.click', compact('webSite', 'clicks'));
     }
 }

@@ -3,30 +3,16 @@
 @section('title', 'Главная страница')
 
 @section('main_content')
-    <script>
-        document.addEventListener('click', function(event) {
-            const clickData = {
-                url: window.location.href,
-                date: new Date().toISOString(),
-                x: event.clientX,
-                y: event.clientY,
-                window_width: window.innerWidth,
-                window_height: window.innerHeight,
-                document_width: document.documentElement.scrollWidth,
-                document_height: document.documentElement.scrollHeight,
-            };
+    <div>
+        <h1>Как это работает)</h1>
+        <h2>Для того, что-бы сайт отслеживался нужно добавить два скрипта:</h2>
+        <h3>
+            1. Подключение скрипта обработки кликов -
+            <pre>&lt;script src="{{ asset('js/click/clickTracker.js') }}"&gt;&lt;/script&gt;</pre>
+            2. Подключение ключа скрипта с id вашего созданного сайта -
+            <pre>&lt;script&gt;startTracking(id-вашего сайта)&lt;/script&gt;</pre>
+        </h3>
 
-            fetch('http://localhost:8000/api/clicks', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(clickData),
-            })
-                .then(response => response.json())
-                .then(data => console.log('Данные отправлены:', data))
-                .catch(error => console.error('Ошибка:', error));
-        });
-    </script>
+    </div>
 
 @endsection
