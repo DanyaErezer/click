@@ -19,4 +19,5 @@ class Click extends Model
         'document_width',
         'document_height',
     ];
+
 }

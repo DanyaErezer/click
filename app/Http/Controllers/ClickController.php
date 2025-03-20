@@ -17,21 +17,19 @@ class ClickController extends Controller
 
     public function store(Request $request)
     {
-        // Валидация данных
+
         $validatedData = $request->validate([
-            'web_sites_id' => 'required|exists:web_sites,id',
             'url' => 'required|url',
             'x' => 'required|integer',
             'y' => 'required|integer',
-            'window_width' => 'required|integer',
-            'window_height' => 'required|integer',
-            'document_width' => 'required|integer',
-            'document_height' => 'required|integer',
+            'window_width' => 'nullable|integer',
+            'window_height' => 'nullable|integer',
+            'document_width' => 'nullable|integer',
+            'document_height' => 'nullable|integer',
         ]);
 
 
         $click = Click::create([
-            'web_sites_id' => $validatedData['web_sites_id'],
             'url' => $validatedData['url'],
             'date' => now(),
             'x' => $validatedData['x'],

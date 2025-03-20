@@ -20,7 +20,6 @@
                 <td>{{ $webSite->id }}</td>
                 <td>{{ $webSite->name }}</td>
                 <td>{{ $webSite->url }}</td>
-                <td>{{ $webSite->web_sites_id }}</td>
                 <td>
                     <a href="{{ route('webSites.edit', $webSite->id) }}" class="btn btn-primary">Редактировать</a>
                     <form action="{{ route('webSites.destroy', $webSite->id) }}" method="POST" style="display:inline;">

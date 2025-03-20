@@ -15,40 +15,38 @@
 <body>
 <div id="heatmap" style="width: 100%; height: 800px;"></div>
 <script src="https://cdn.jsdelivr.net/npm/heatmap.js"></script>
+<div id="heatmap" style="width: 100%; height: 100vh; position: relative;"></div>
+
 <script>
     const heatmap = h337.create({
         container: document.getElementById('heatmap'),
+        radius: 15, // Размер пятен кликов
     });
 
-    // Предположим, что data приходит с серверной части
     const data = @json($click);
 
-    // Получаем размеры окна и документа
+    // Получаем размеры окна пользователя и документа
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
-    const documentWidth = document.documentElement.scrollWidth;
-    const documentHeight = document.documentElement.scrollHeight;
 
-    // Нормализуем данные относительно документа
     const points = data.map(click => {
-        // Нормализуем координаты на основе размеров документа
-        const normalizedX = click.x / documentWidth * 100; // нормализуем x координату
-        const normalizedY = click.y / documentHeight * 100; // нормализуем y координату
+        // Масштабируем координаты под текущее разрешение экрана
+        const scaleX = windowWidth / click.window_width;
+        const scaleY = windowHeight / click.window_height;
 
         return {
-            x: normalizedX * documentWidth,  // Преобразуем обратно в реальные координаты
-            y: normalizedY * documentHeight, // Преобразуем обратно в реальные координаты
-            value: 1,  // Можно регулировать интенсивность клика
+            x: Math.round(click.x * scaleX),
+            y: Math.round(click.y * scaleY),
+            value: 1,
         };
     });
 
-    // Устанавливаем данные для heatmap
     heatmap.setData({
-        max: 10, // Максимальное значение для отображения
-        data: points, // Точки данных
+        max: 50,
+        data: points,
     });
-
 </script>
+
 
 </body>
 </html>
